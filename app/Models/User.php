@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -17,6 +17,11 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+     function posts() {
+         return $this->hasMany('App\Models\Post');
+     }
+
     protected $fillable = [
         'first_name',
         'last_name',
