@@ -18,6 +18,8 @@ use App\Http\Controllers\PostController;
 //public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/posts/get', [PostController::class, 'index']);
+Route::get('/posts/get/{id}', [PostController::class, 'show']);
 
 //private routes
 Route::group(['middleware' => ['auth:sanctum']], function () {

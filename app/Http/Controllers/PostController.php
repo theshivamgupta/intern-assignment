@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -14,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return Post::all();
     }
 
     /**
@@ -37,13 +38,12 @@ class PostController extends Controller
 
         // save to storage/app/photos as the new $filename
         $path = $file->storeAs('photos', $filename);
-        $post = new Post();
-
-        $post->title = $fields['title'];
-        $post->description = $fields['description'];
-        $post->image = $path;
-        $post->user_id = $id;
-        $post->save();
+        $post = Post::create([
+            'title' => $fields['title'],
+            'description' => $fields['description'],
+            'image' => $path,
+            'user_id' => auth()->id(),
+        ]);
         return response()->json(['message'=>'Comment Saved','data'=>$post],200);
     }
 
@@ -55,7 +55,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return User::find($id)->posts;
     }
 
     /**
