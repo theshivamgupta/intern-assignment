@@ -27,17 +27,13 @@ class PostController extends Controller
     public function store(Request $request, $id)
     {
         $fields = $request->validate([
-            'title' => 'required|string',
+            'title' => 'required|string|min:3|max:255',
             'description' => 'required|string',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ]);
-        // if($fields->fails()) {
-        //     return response()->json(['message'=>$validator->messages(),'data'=>null],400);
-        // }
         $file = $request->file('image');
-        $filename = 'profile-photo-' . time() . '.' . $file->getClientOriginalExtension();
-
-        // save to storage/app/photos as the new $filename
-        $path = $file->storeAs('photos', $filename);
+        $contents = $file->openFile()->fread($file->getSize());
+        $path = $request->file('image')->store('public/images');
         $post = Post::create([
             'title' => $fields['title'],
             'description' => $fields['description'],
@@ -67,7 +63,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
