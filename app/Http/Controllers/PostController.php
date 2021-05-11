@@ -40,7 +40,7 @@ class PostController extends Controller
             'image' => $path,
             'user_id' => auth()->id(),
         ]);
-        return response()->json(['message'=>'Comment Saved','data'=>$post],200);
+        return response()->json(['message'=>'post Saved','data'=>$post],200);
     }
 
     /**
@@ -61,7 +61,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id, $id)
     {
         
     }
